@@ -6,6 +6,7 @@
 /// @brief класс интерфейс доступных действий
 class IModel {
  public:
+  virtual ~IModel() = default;
   virtual void CreateNewDocument() = 0;
   virtual void ImportDocument() = 0;
   virtual void ExportDocument() = 0;

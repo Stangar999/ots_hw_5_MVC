@@ -1,24 +1,12 @@
-﻿/// @file
-#include "view.h"
+﻿#include "view.h"
 
 #include <iostream>
 #include <memory>
 
-#include "controller.h"
-
-using namespace std;
-
-int main() {
-  std::shared_ptr model_facade = make_shared<ModelFacade>();
-  std::shared_ptr view = make_shared<View>(model_facade);
-  std::unique_ptr controller = make_unique<Controller>(model_facade, view);
-  view->show();
-
-  return 0;
-}
-
-View::View(std::weak_ptr<ModelFacade> model_facade) : model_facade_(model_facade) {
-  model_facade_.lock()->AddObserver(this);
+View::View(std::weak_ptr<ModelFacade> model_facade) {
+  if (auto ptr = model_facade.lock(); ptr) {
+    ptr->AddObserver(this);
+  }
 }
 
 void View::show() {
@@ -61,5 +49,6 @@ void View::show() {
 }
 
 void View::UpDate(Comand comand) {
-  std::cout << "view update to comand " << static_cast<int>(comand) << std::endl;
+  std::cout << "view update to comand " << static_cast<int>(comand)
+            << std::endl;
 }

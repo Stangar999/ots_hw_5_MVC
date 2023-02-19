@@ -13,12 +13,14 @@ set(HEADERS src/view.h
   src/model.h
   src/model_facade.h
   src/controller.h
+  src/observer.h
 )
 
 set(SOURCES src/view.cpp
   src/model.cpp
   src/model_facade.cpp
   src/controller.cpp
+  src/main.cpp
 )
 
 add_library(version lib/version_lib/version.cpp lib/version_lib/version.h)

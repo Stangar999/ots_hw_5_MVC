@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "model.h"
+#include "observer.h"
 
 enum class Comand {
   CreateNewDocument = 1,
@@ -11,26 +12,6 @@ enum class Comand {
   ImportDocument,
   RemoveGraphicPrimitive,
 };
-/// @class
-/// @brief класс наблюдатель
-class Observer {
- public:
-  virtual void UpDate(Comand) = 0;
-};
-
-/// @class
-/// @brief класс наблюдаемый
-class Observered {
- public:
-  /// добавить наблюдателя
-  void AddObserver(Observer* observer);
-  /// уведомить наблюдателей
-  void NotifyUpdate(Comand comand);
-
- private:
-  /// наблюдатели
-  std::vector<Observer*> observers_;
-};
 
 /// @class
 /// @brief класс фасада модели
@@ -38,7 +19,7 @@ class Observered {
 /// тонкий фасад модели, существует для отделения толстой модели
 /// именно с фасад моделью взаимодействует представление и контроллер
 /// реализует слабое связывание с помощью наблюдателя
-class ModelFacade : public Observered, public IModel {
+class ModelFacade : public Observered<Comand>, public IModel {
  public:
   ModelFacade();
   void CreateNewDocument() override;
@@ -49,5 +30,5 @@ class ModelFacade : public Observered, public IModel {
 
  private:
   /// композиция доменной модели
-  std::unique_ptr<detail::Model> model_;
+  std::unique_ptr<IModel> model_;
 };

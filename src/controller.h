@@ -1,4 +1,6 @@
-﻿#include <memory>
+﻿#pragma once
+
+#include <memory>
 
 #include "view.h"
 
@@ -7,9 +9,9 @@
 ///
 /// подписан на изменения представления передает их фасаду модели
 /// является тонкой прослойкой между gui и фасадом модели
-class Controller : public Observer {
+class Controller : public Observer<Comand> {
  public:
-  Controller(std::weak_ptr<ModelFacade> model_facade, std::weak_ptr<View> view);
+  Controller(std::weak_ptr<ModelFacade> model_facade, View* view);
 
   /// вызывается при обновленеии представления
   void UpDate(Comand comand) override;
@@ -17,6 +19,4 @@ class Controller : public Observer {
  private:
   /// агрегация фасада модели
   std::weak_ptr<ModelFacade> model_facade_;
-  /// агрегация представления
-  std::weak_ptr<View> view_;
 };

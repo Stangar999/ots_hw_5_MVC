@@ -1,17 +1,5 @@
 ﻿#include "model_facade.h"
 
-void Observered::AddObserver(Observer* observer) {
-  observers_.push_back(observer);
-}
-
-void Observered::NotifyUpdate(Comand comand) {
-  for (Observer* observer : observers_) {
-    if (observer) {
-      observer->UpDate(comand);
-    }
-  }
-}
-
 ModelFacade::ModelFacade() : model_(std::make_unique<detail::Model>()) {
 }
 
